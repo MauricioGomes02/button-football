@@ -270,7 +270,7 @@ export class FootballField {
             -(BIG_AREA_VERTICAL_LENGTH * scale))
 
         const penaltyMark = this.createPenaltyMark(scale)
-        penaltyMark.position.set(0, 10, -(PENALTY_MARK * scale))
+        penaltyMark.position.set(0, LINES_HEIGHT * scale , -(PENALTY_MARK * scale))
 
         group.add(leftLine)
         group.add(rightLine)
@@ -330,7 +330,7 @@ export class FootballField {
         }
         const material = new THREE.MeshBasicMaterial(materialParameters)
         const mesh = new THREE.Mesh(geometry, material)
-        // mesh.rotation.set(0, Math.PI / 180 * 90, 0)
+        mesh.rotation.set(Math.PI / 180 * -90, 0, 0)
 
         return mesh
     }
@@ -393,5 +393,41 @@ export class FootballField {
         }
         const material = new THREE.MeshBasicMaterial(materialParameters)
         return new THREE.Mesh(geometry, material)
+    }
+
+    private static createCircleLine(radius: number, segments: number, startAngle: number, endAngle: number) {
+        const startSegment = startAngle * segments / 2 / Math.PI
+        const endSegment = endAngle * segments / 2 / Math.PI
+
+        const totalSegments = Math.abs(endSegment - startSegment)
+
+        let segment = startSegment
+
+        const points: THREE.Vector3[] = []
+        for (let index = 0; index < totalSegments + 1; index++) {            
+            if (segment >= segments) {
+                segment = 0
+            }
+
+            const theta = 2 * Math.PI * segment / segments
+            const x = radius * Math.cos(theta)
+            const y = radius * Math.sin(theta)
+
+            const point = new THREE.Vector3(x, 0, y)
+            points.push(point)
+
+            segment += 1
+        }
+
+        for (let index = 0; index < points.length; index++) {
+            if (index === 0) {
+                continue
+            }
+
+            const previous = points[index - 1]
+            const current = points[index]
+
+            
+        }
     }
 }
