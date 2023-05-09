@@ -15,10 +15,10 @@ export class Player {
         this._position = position
         new PlayerCommands(keys, this.updateDirection.bind(this))
 
-        this._speed = 0.20
+        this._speed = 0.15
         this._horizontalDirection = 0
         this._verticalDirection = 0
-        this._radius = 2
+        this._radius = 1
         this._limit = []
 
         this.setLimit()

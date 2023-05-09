@@ -9,8 +9,8 @@ export function createPlayer(color: number) {
     const material = materialBuilder.build()
 
     cylinderBuilder.withHeight(1)
-    cylinderBuilder.withRadiusTop(2)
-    cylinderBuilder.withRadiusBottom(2)
+    cylinderBuilder.withRadiusTop(1)
+    cylinderBuilder.withRadiusBottom(1)
 
     cylinderBuilder.withMaterial(material)
 

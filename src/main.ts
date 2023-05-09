@@ -8,7 +8,7 @@ import { Position } from './domain/objectValues/position'
 import { Key } from './domain/objectValues/key'
 import { EMovement } from './domain/enums/movement'
 import { createBall } from './models/ball'
-import { Measures } from './models/measures'
+import { createStrips } from './models/strips'
 
 const WIDTH = window.innerWidth
 const HEIGHT = window.innerHeight
@@ -44,6 +44,7 @@ const commandKeysPlayer2 = [
 const player2 = new Player(positionPlayer2, commandKeysPlayer2)
 
 const baseArea = createBaseArea()
+const strips = createStrips()
 const lines = createLines()
 const player1Model = createPlayer(0x0000ff)
 const player2Model = createPlayer(0xff0000)
@@ -67,15 +68,16 @@ player2Model.position.set(
 	player2.position.z
 )
 
-// scene.add(baseArea)
+scene.add(baseArea)
+scene.add(strips)
 scene.add(lines)
 scene.add(player1Model)
 scene.add(player2Model)
 scene.add(goals)
 scene.add(ball)
 
-camera.position.set(0, 75, 0)
-camera.lookAt(0, 0, 0)
+camera.position.set(ball.position.x, 20, ball.position.z + 20)
+camera.lookAt(ball.position.x, ball.position.y, ball.position.z)
 
 function animate() {
 	player1Model.position.set(
@@ -100,14 +102,17 @@ function animate() {
 
 	const length2 = Math.sqrt(Math.pow(diffXPlayer2, 2) + Math.pow(diffZPlayer2, 2))
 
-	if (length1 <= Measures.lineWidth * 3 + 2) {
-		ball.position.x += (length1) * (diffXPlayer1 / length1) * player1.horizontalDirection
-		ball.position.z += (length1) * (diffZPlayer1 / length1) * player1.verticalDirection
+	if (length1 <= 1.5) {
+		ball.position.x += (length1 - 1) * (diffXPlayer1 / length1) * player1.horizontalDirection
+		ball.position.z += (length1 - 1) * (diffZPlayer1 / length1) * player1.verticalDirection
 	}
-	if (length2 <= Measures.lineWidth * 3 + 2) {
-		ball.position.x += (length2) * (diffXPlayer2 / length2) * player2.horizontalDirection
-		ball.position.z += (length2) * (diffZPlayer2 / length2) * player2.verticalDirection
+	if (length2 <= 1.5) {
+		ball.position.x += (length2 - 1) * (diffXPlayer2 / length2) * player2.horizontalDirection
+		ball.position.z += (length2 - 1) * (diffZPlayer2 / length2) * player2.verticalDirection
 	}
+
+	camera.position.set(ball.position.x, 20, ball.position.z + 20)
+	camera.lookAt(ball.position.x, ball.position.y, ball.position.z)
 
 	renderer.render(scene, camera)
 }

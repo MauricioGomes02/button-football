@@ -10,7 +10,7 @@ export function createBall() {
     const material = materialBuilder.build()
 
     cylinderBuilder.withHeight(Measures.lineWidth)
-    const radius = Measures.lineWidth * 3
+    const radius = 0.5
     cylinderBuilder.withRadiusTop(radius)
     cylinderBuilder.withRadiusBottom(radius)
 
